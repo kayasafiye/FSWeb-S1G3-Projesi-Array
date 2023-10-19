@@ -40,13 +40,10 @@ Aşağıdakileri yapmak için aşağıdaki kopyalama işlevini kullanın:
 */
 
 function kopyala(dizi){
-  return dizi.slice();
+  let kopyaTatlar = [...dizi];
+  return kopyaTatlar
 }
-// Orijinal tatlar dizisini kopyala
-const kopyaTatlar = kopyala(orijinalTatlar);
-
-// Kopya diziyi kontrol etmek için yazdır
-console.log(kopyaTatlar);
+console.log(kopyala(orijinalTatlar));
 
 /* Görev 2:
 Bir dizinin tam olarak 25 çeşit olduğunu onaylayın. İşleviniz şunları kabul etmelidir:
@@ -58,11 +55,9 @@ Bir dizinin tam olarak 25 çeşit olduğunu onaylayın. İşleviniz şunları ka
 Örneğin: dizi25Cesit(orijinalTatlar) kodunuz düzgün çalışıyorsa true değerini döndürür.
 */
 
-
 function dizi25Cesitmi(dizi){
   return dizi.length === 25;
 }
-
 const sonuc = dizi25Cesitmi(orijinalTatlar);
 console.log(sonuc); // Eğer dizi 25 çeşit içeriyorsa true, aksi takdirde false
 
@@ -77,7 +72,6 @@ Aşağıdakileri yapmak için cesitEkle işlevini kullanın:
 
   Örneğin: cesitEkle(orijinalTatlar, "Kakule") işlevi doğru çalıştığında ["Kakule", "Muz",..."Vanilya"] şeklinde dönmelidir
 */
-
 
 function cesitEkle(tatlar, yeniTat){
   tatlar.unshift(yeniTat); // Yeni tadı dizinin başına ekle
@@ -122,9 +116,9 @@ Aşağıdakileri yapmak için aşağıdaki indekstekiCesitiGetir işlevini kulla
 
 function indekstekiCesitiGetir(tatlar,indeks){
   if (indeks >= 0 && indeks < tatlar.length) {
-    return tatlar[indeks];
+    return tatlar[indeks]; // Verilen indeksteki çeşidi döndür
 } else {
-    return "Geçersiz İndeks"; // İndeks dizi sınırlarının dışında ise bir hata mesajı döndür
+    return "Belirtilen indeks bulunamadı."; // Geçersiz indeks için bir hata mesajı döndür
 }
 }
 const indeks = 2;
@@ -147,10 +141,27 @@ Aşağıdakileri yapmak için ismeGoreCesitCikar işlevini kullanın:
   İPUCU: Bunun için .splice() kullanabilirsiniz.
 */
 
-function ismeGoreCesitCikar(tatlar,lezzetAdi){
-  /*kod buraya*/
-}
+// I.YOL
+// function ismeGoreCesitCikar(tatlar,lezzetAdi){
+//   for(let i = 0; i < tatlar.length; i++)
+//     if (tatlar[i] == lezzetAdi) {
+//         tatlar.splice(i, 1); // Hedef lezzeti diziden çıkar
+//         return tatlar;
+//     }
+//     return "Aradığınız lezzet bulunamadı";
+// }
 
+// II. YOL
+function ismeGoreCesitCikar(tatlar,lezzetAdi){
+  const indeks = tatlar.findIndex(lezzet => lezzet === lezzetAdi); // Hedef lezzetin indeksini bul
+    if (indeks !== -1) {
+        tatlar.splice(indeks, 1); // Hedef lezzeti diziden çıkar
+    }
+    return tatlar; // Güncellenmiş diziyi döndür
+}
+const lezzetAdi = "Tarçın";
+const güncellenmisTatlar = ismeGoreCesitCikar(orijinalTatlar, lezzetAdi);
+console.log(güncellenmisTatlar);
 
 /* Görev 7:
 
@@ -173,9 +184,18 @@ Aşağıdakileri yapmak için ismeGoreFiltrele işlevini kullanın:
 */
 
 
-function ismeGoreFiltrele(/*kod buraya*/){
-  /*kod buraya*/
+function ismeGoreFiltrele(tatlar, filtre) {
+  const filtrelenmisTatlar = [];
+  for (let i = 0; i < tatlar.length; i++) {
+      if (tatlar[i].includes(filtre)) {
+          filtrelenmisTatlar.push(tatlar[i]);
+      }
+  }
+  return filtrelenmisTatlar;
 }
+const filtre = "Çikolata";
+const filtrelenmisTatlar = ismeGoreFiltrele(orijinalTatlar, filtre);
+console.log(filtrelenmisTatlar);
 
 
 
